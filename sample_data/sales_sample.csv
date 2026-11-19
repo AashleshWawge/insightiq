@@ -1,0 +1,181 @@
+order_id,order_date,customer_name,city,product_name,category,quantity,unit_price
+ORD-1001,2026-01-29,Aditi Sharma,Hyderabad,Noise-Cancelling Headphones,Electronics,2,6999.00
+ORD-1002,2026-02-05,Arjun Malhotra,Delhi,Laptop Backpack,Accessories,5,2499.00
+ORD-1003,2026-01-23,Karan Mehra,Kolkata,Wireless Mouse,Electronics,1,750.00
+ORD-1004,2026-01-24,Amit Kumar,Pune,Gel Pen Set (Pack of 10),Stationery,5,250.00
+ORD-1005,2026-01-07,Ananya Nair,Pune,Cable Organizer Pouch,Accessories,5,499.00
+ORD-1006,2026-04-18,Amit Kumar,Ahmedabad,Stainless Steel Water Bottle,Accessories,3,850.00
+ORD-1007,2026-01-02,Meera Pillai,Bengaluru,Cable Organizer Pouch,Accessories,4,499.00
+ORD-1008,2026-03-29,Pooja Iyer,Bengaluru,Noise-Cancelling Headphones,Electronics,3,6999.00
+ORD-1009,2026-01-27,Rahul Verma,Kolkata,Mechanical Keyboard,Electronics,3,3499.00
+ORD-1010,2026-03-30,Karan Mehra,Hyderabad,Wireless Mouse,Electronics,4,750.00
+ORD-1011,2026-05-18,Rahul Verma,Kolkata,Mechanical Keyboard,Electronics,5,3499.00
+ORD-1012,2026-03-17,Siddharth Jain,Chennai,Stainless Steel Water Bottle,Accessories,2,850.00
+ORD-1013,2026-01-18,Aditi Sharma,Pune,Ergonomic Office Chair,Furniture,1,12500.00
+ORD-1014,2026-03-01,Siddharth Jain,Delhi,LED Desk Lamp,Furniture,3,1450.00
+ORD-1015,2026-04-27,Divya Joshi,Chennai,USB-C Hub,Electronics,3,1899.00
+ORD-1016,2026-04-01,Amit Kumar,Hyderabad,Cable Organizer Pouch,Accessories,1,499.00
+ORD-1017,2026-02-13,Ananya Nair,Pune,USB-C Hub,Electronics,4,1899.00
+ORD-1018,2026-04-08,Pooja Iyer,Pune,Laptop Backpack,Accessories,3,2499.00
+ORD-1019,2026-01-15,Amit Kumar,Mumbai,Standing Desk Converter,Furniture,4,8900.00
+ORD-1020,2026-03-10,Rahul Verma,Pune,Stainless Steel Water Bottle,Accessories,3,850.00
+ORD-1021,2026-02-24,Divya Joshi,Ahmedabad,LED Desk Lamp,Furniture,4,1450.00
+ORD-1022,2026-02-06,Pooja Iyer,Bengaluru,Noise-Cancelling Headphones,Electronics,5,6999.00
+ORD-1023,2026-05-18,Pooja Iyer,Kolkata,Stainless Steel Water Bottle,Accessories,4,850.00
+ORD-1024,2026-04-03,Amit Kumar,Bengaluru,Gel Pen Set (Pack of 10),Stationery,4,250.00
+ORD-1025,2026-01-24,Meera Pillai,Mumbai,Mechanical Keyboard,Electronics,2,3499.00
+ORD-1026,2026-02-10,Meera Pillai,Kolkata,Stainless Steel Water Bottle,Accessories,1,850.00
+ORD-1027,2026-04-09,Neha Singh,Ahmedabad,Gel Pen Set (Pack of 10),Stationery,3,250.00
+ORD-1028,2026-05-22,Siddharth Jain,Mumbai,Laptop Backpack,Accessories,1,2499.00
+ORD-1029,2026-05-18,Meera Pillai,Hyderabad,Laptop Backpack,Accessories,3,2499.00
+ORD-1030,2026-01-29,Pooja Iyer,Kolkata,USB-C Hub,Electronics,4,1899.00
+ORD-1031,2026-01-01,Arjun Malhotra,Hyderabad,Gel Pen Set (Pack of 10),Stationery,2,250.00
+ORD-1032,2026-05-10,Priya Menon,Delhi,Laptop Backpack,Accessories,3,2499.00
+ORD-1033,2026-05-10,Karan Mehra,Pune,USB-C Hub,Electronics,3,1899.00
+ORD-1034,2026-02-11,Ananya Nair,Mumbai,Stainless Steel Water Bottle,Accessories,3,850.00
+ORD-1035,2026-05-06,Aditi Sharma,Delhi,Standing Desk Converter,Furniture,3,8900.00
+ORD-1036,2026-03-03,Aditi Sharma,Pune,Stainless Steel Water Bottle,Accessories,1,850.00
+ORD-1037,2026-01-22,Arjun Malhotra,Ahmedabad,Mechanical Keyboard,Electronics,5,3499.00
+ORD-1038,2026-02-02,Sneha Patel,Ahmedabad,Gel Pen Set (Pack of 10),Stationery,2,250.00
+ORD-1039,2026-03-09,Ananya Nair,Kolkata,Noise-Cancelling Headphones,Electronics,5,6999.00
+ORD-1040,2026-02-21,Arjun Malhotra,Hyderabad,LED Desk Lamp,Furniture,3,1450.00
+ORD-1041,2026-04-23,Priya Menon,Ahmedabad,Mechanical Keyboard,Electronics,2,3499.00
+ORD-1042,2026-02-27,Rahul Verma,Chennai,Wireless Mouse,Electronics,5,750.00
+ORD-1043,2026-05-22,Amit Kumar,Pune,Wireless Mouse,Electronics,1,750.00
+ORD-1044,2026-01-16,Amit Kumar,Delhi,Wireless Mouse,Electronics,3,750.00
+ORD-1045,2026-01-19,Ananya Nair,Pune,Ergonomic Office Chair,Furniture,4,12500.00
+ORD-1046,2026-02-24,Ananya Nair,Bengaluru,Cable Organizer Pouch,Accessories,5,499.00
+ORD-1047,2026-05-28,Vikram Rao,Pune,Hardcover Notebook,Stationery,4,350.00
+ORD-1048,2026-02-18,Rahul Verma,Delhi,Laptop Backpack,Accessories,4,2499.00
+ORD-1049,2026-04-01,Neha Singh,Kolkata,Hardcover Notebook,Stationery,1,350.00
+ORD-1050,2026-01-26,Aditi Sharma,Kolkata,Cable Organizer Pouch,Accessories,3,499.00
+ORD-1051,2026-01-28,Amit Kumar,Pune,Noise-Cancelling Headphones,Electronics,5,6999.00
+ORD-1052,2026-04-25,Sneha Patel,Kolkata,USB-C Hub,Electronics,3,1899.00
+ORD-1053,2026-04-29,Amit Kumar,Delhi,Hardcover Notebook,Stationery,5,350.00
+ORD-1054,2026-01-26,Aditi Sharma,Mumbai,Mechanical Keyboard,Electronics,2,3499.00
+ORD-1055,2026-02-12,Neha Singh,Ahmedabad,Hardcover Notebook,Stationery,2,350.00
+ORD-1056,2026-04-13,Priya Menon,Mumbai,USB-C Hub,Electronics,4,1899.00
+ORD-1057,2026-01-01,Neha Singh,Hyderabad,Hardcover Notebook,Stationery,3,350.00
+ORD-1058,2026-04-19,Arjun Malhotra,Ahmedabad,USB-C Hub,Electronics,2,1899.00
+ORD-1059,2026-03-17,Amit Kumar,Mumbai,Stainless Steel Water Bottle,Accessories,5,850.00
+ORD-1060,2026-01-16,Arjun Malhotra,Chennai,Wireless Mouse,Electronics,1,750.00
+ORD-1061,2026-05-30,Vikram Rao,Bengaluru,Wireless Mouse,Electronics,5,750.00
+ORD-1062,2026-01-21,Siddharth Jain,Bengaluru,Mechanical Keyboard,Electronics,5,3499.00
+ORD-1063,2026-01-18,Divya Joshi,Pune,LED Desk Lamp,Furniture,1,1450.00
+ORD-1064,2026-05-26,Amit Kumar,Mumbai,Stainless Steel Water Bottle,Accessories,1,850.00
+ORD-1065,2026-04-18,Divya Joshi,Chennai,Ergonomic Office Chair,Furniture,2,12500.00
+ORD-1066,2026-03-22,Amit Kumar,Hyderabad,LED Desk Lamp,Furniture,2,1450.00
+ORD-1067,2026-03-18,Vikram Rao,Chennai,Mechanical Keyboard,Electronics,1,3499.00
+ORD-1068,2026-04-28,Karan Mehra,Delhi,Mechanical Keyboard,Electronics,5,3499.00
+ORD-1069,2026-02-24,Ananya Nair,Hyderabad,USB-C Hub,Electronics,3,1899.00
+ORD-1070,2026-01-18,Priya Menon,Pune,Standing Desk Converter,Furniture,3,8900.00
+ORD-1071,2026-02-10,Vikram Rao,Hyderabad,Stainless Steel Water Bottle,Accessories,5,850.00
+ORD-1072,2026-01-03,Divya Joshi,Hyderabad,Laptop Backpack,Accessories,1,2499.00
+ORD-1073,2026-02-04,Pooja Iyer,Delhi,Mechanical Keyboard,Electronics,5,3499.00
+ORD-1074,2026-02-09,Pooja Iyer,Hyderabad,Stainless Steel Water Bottle,Accessories,2,850.00
+ORD-1075,2026-03-29,Amit Kumar,Hyderabad,Gel Pen Set (Pack of 10),Stationery,4,250.00
+ORD-1076,2026-03-06,Priya Menon,Mumbai,Mechanical Keyboard,Electronics,4,3499.00
+ORD-1077,2026-03-12,Aditi Sharma,Mumbai,Standing Desk Converter,Furniture,2,8900.00
+ORD-1078,2026-03-09,Sneha Patel,Ahmedabad,Gel Pen Set (Pack of 10),Stationery,4,250.00
+ORD-1079,2026-05-24,Aditi Sharma,Delhi,Mechanical Keyboard,Electronics,2,3499.00
+ORD-1080,2026-05-20,Aditi Sharma,Chennai,Stainless Steel Water Bottle,Accessories,5,850.00
+ORD-1081,2026-02-07,Neha Singh,Bengaluru,Wireless Mouse,Electronics,3,750.00
+ORD-1082,2026-04-04,Priya Menon,Mumbai,Standing Desk Converter,Furniture,2,8900.00
+ORD-1083,2026-03-05,Divya Joshi,Delhi,Standing Desk Converter,Furniture,5,8900.00
+ORD-1084,2026-04-15,Karan Mehra,Bengaluru,Noise-Cancelling Headphones,Electronics,2,6999.00
+ORD-1085,2026-02-15,Priya Menon,Kolkata,Wireless Mouse,Electronics,2,750.00
+ORD-1086,2026-03-27,Meera Pillai,Kolkata,Laptop Backpack,Accessories,2,2499.00
+ORD-1087,2026-03-10,Sneha Patel,Delhi,LED Desk Lamp,Furniture,1,1450.00
+ORD-1088,2026-05-01,Amit Kumar,Pune,Hardcover Notebook,Stationery,3,350.00
+ORD-1089,2026-03-20,Siddharth Jain,Pune,Noise-Cancelling Headphones,Electronics,1,6999.00
+ORD-1090,2026-02-19,Neha Singh,Chennai,Ergonomic Office Chair,Furniture,1,12500.00
+ORD-1091,2026-03-13,Rohan Gupta,Kolkata,Laptop Backpack,Accessories,5,2499.00
+ORD-1092,2026-03-26,Aditi Sharma,Delhi,Ergonomic Office Chair,Furniture,2,12500.00
+ORD-1093,2026-05-29,Pooja Iyer,Mumbai,Mechanical Keyboard,Electronics,5,3499.00
+ORD-1094,2026-04-22,Rohan Gupta,Chennai,LED Desk Lamp,Furniture,5,1450.00
+ORD-1095,2026-05-11,Rahul Verma,Kolkata,Stainless Steel Water Bottle,Accessories,2,850.00
+ORD-1096,2026-03-07,Aditi Sharma,Kolkata,Wireless Mouse,Electronics,5,750.00
+ORD-1097,2026-05-18,Divya Joshi,Pune,Standing Desk Converter,Furniture,4,8900.00
+ORD-1098,2026-01-18,Divya Joshi,Chennai,Stainless Steel Water Bottle,Accessories,3,850.00
+ORD-1099,2026-02-01,Arjun Malhotra,Hyderabad,Gel Pen Set (Pack of 10),Stationery,3,250.00
+ORD-1100,2026-04-15,Rohan Gupta,Kolkata,Cable Organizer Pouch,Accessories,3,499.00
+ORD-1101,2026-05-22,Sneha Patel,Pune,LED Desk Lamp,Furniture,4,1450.00
+ORD-1102,2026-02-14,Karan Mehra,Hyderabad,LED Desk Lamp,Furniture,5,1450.00
+ORD-1103,2026-01-01,Pooja Iyer,Hyderabad,Noise-Cancelling Headphones,Electronics,4,6999.00
+ORD-1104,2026-05-29,Karan Mehra,Chennai,Hardcover Notebook,Stationery,4,350.00
+ORD-1105,2026-04-24,Divya Joshi,Pune,Gel Pen Set (Pack of 10),Stationery,4,250.00
+ORD-1106,2026-02-13,Divya Joshi,Delhi,Ergonomic Office Chair,Furniture,5,12500.00
+ORD-1107,2026-03-27,Rahul Verma,Pune,Laptop Backpack,Accessories,3,2499.00
+ORD-1108,2026-02-27,Meera Pillai,Pune,USB-C Hub,Electronics,1,1899.00
+ORD-1109,2026-01-12,Amit Kumar,Ahmedabad,Stainless Steel Water Bottle,Accessories,1,850.00
+ORD-1110,2026-04-27,Neha Singh,Pune,Cable Organizer Pouch,Accessories,4,499.00
+ORD-1111,2026-05-07,Neha Singh,Pune,USB-C Hub,Electronics,1,1899.00
+ORD-1112,2026-01-28,Meera Pillai,Kolkata,Noise-Cancelling Headphones,Electronics,2,6999.00
+ORD-1113,2026-05-13,Vikram Rao,Mumbai,Gel Pen Set (Pack of 10),Stationery,2,250.00
+ORD-1114,2026-02-01,Vikram Rao,Bengaluru,Hardcover Notebook,Stationery,5,350.00
+ORD-1115,2026-05-24,Karan Mehra,Chennai,Hardcover Notebook,Stationery,5,350.00
+ORD-1116,2026-05-10,Neha Singh,Ahmedabad,USB-C Hub,Electronics,4,1899.00
+ORD-1117,2026-04-26,Pooja Iyer,Pune,Laptop Backpack,Accessories,3,2499.00
+ORD-1118,2026-05-14,Vikram Rao,Pune,Ergonomic Office Chair,Furniture,4,12500.00
+ORD-1119,2026-01-20,Arjun Malhotra,Hyderabad,Noise-Cancelling Headphones,Electronics,3,6999.00
+ORD-1120,2026-03-27,Rohan Gupta,Delhi,USB-C Hub,Electronics,2,1899.00
+ORD-1121,2026-03-01,Neha Singh,Bengaluru,Cable Organizer Pouch,Accessories,2,499.00
+ORD-1122,2026-01-17,Neha Singh,Kolkata,Standing Desk Converter,Furniture,5,8900.00
+ORD-1123,2026-04-30,Neha Singh,Mumbai,Noise-Cancelling Headphones,Electronics,4,6999.00
+ORD-1124,2026-04-10,Priya Menon,Mumbai,Stainless Steel Water Bottle,Accessories,4,850.00
+ORD-1125,2026-05-03,Aditi Sharma,Chennai,Ergonomic Office Chair,Furniture,4,12500.00
+ORD-1126,2026-04-18,Ananya Nair,Pune,Hardcover Notebook,Stationery,2,350.00
+ORD-1127,2026-03-11,Neha Singh,Ahmedabad,Wireless Mouse,Electronics,4,750.00
+ORD-1128,2026-03-28,Divya Joshi,Kolkata,Cable Organizer Pouch,Accessories,2,499.00
+ORD-1129,2026-04-30,Priya Menon,Bengaluru,Stainless Steel Water Bottle,Accessories,5,850.00
+ORD-1130,2026-01-07,Priya Menon,Kolkata,Stainless Steel Water Bottle,Accessories,5,850.00
+ORD-1131,2026-01-07,Rahul Verma,Kolkata,USB-C Hub,Electronics,4,1899.00
+ORD-1132,2026-02-16,Aditi Sharma,Hyderabad,LED Desk Lamp,Furniture,3,1450.00
+ORD-1133,2026-02-24,Vikram Rao,Chennai,Standing Desk Converter,Furniture,4,8900.00
+ORD-1134,2026-03-13,Meera Pillai,Kolkata,Ergonomic Office Chair,Furniture,1,12500.00
+ORD-1135,2026-05-01,Aditi Sharma,Mumbai,Standing Desk Converter,Furniture,2,8900.00
+ORD-1136,2026-01-18,Meera Pillai,Mumbai,Wireless Mouse,Electronics,2,750.00
+ORD-1137,2026-02-21,Siddharth Jain,Mumbai,Stainless Steel Water Bottle,Accessories,2,850.00
+ORD-1138,2026-03-03,Sneha Patel,Ahmedabad,Laptop Backpack,Accessories,1,2499.00
+ORD-1139,2026-05-25,Amit Kumar,Ahmedabad,Cable Organizer Pouch,Accessories,3,499.00
+ORD-1140,2026-04-05,Sneha Patel,Delhi,USB-C Hub,Electronics,3,1899.00
+ORD-1141,2026-01-28,Karan Mehra,Mumbai,Ergonomic Office Chair,Furniture,5,12500.00
+ORD-1142,2026-04-07,Neha Singh,Pune,Mechanical Keyboard,Electronics,5,3499.00
+ORD-1143,2026-03-04,Rahul Verma,Hyderabad,Laptop Backpack,Accessories,5,2499.00
+ORD-1144,2026-01-31,Meera Pillai,Mumbai,Standing Desk Converter,Furniture,5,8900.00
+ORD-1145,2026-04-20,Divya Joshi,Chennai,Mechanical Keyboard,Electronics,5,3499.00
+ORD-1146,2026-03-29,Aditi Sharma,Kolkata,Hardcover Notebook,Stationery,1,350.00
+ORD-1147,2026-04-21,Rohan Gupta,Ahmedabad,Cable Organizer Pouch,Accessories,2,499.00
+ORD-1148,2026-04-22,Sneha Patel,Hyderabad,Stainless Steel Water Bottle,Accessories,5,850.00
+ORD-1149,2026-05-04,Vikram Rao,Kolkata,Cable Organizer Pouch,Accessories,5,499.00
+ORD-1150,2026-03-10,Rohan Gupta,Pune,Mechanical Keyboard,Electronics,3,3499.00
+ORD-1151,2026-04-26,Amit Kumar,Ahmedabad,Stainless Steel Water Bottle,Accessories,5,850.00
+ORD-1152,2026-04-08,Rohan Gupta,Mumbai,Hardcover Notebook,Stationery,3,350.00
+ORD-1153,2026-02-16,Vikram Rao,Pune,Standing Desk Converter,Furniture,3,8900.00
+ORD-1154,2026-03-29,Pooja Iyer,Hyderabad,Gel Pen Set (Pack of 10),Stationery,1,250.00
+ORD-1155,2026-05-13,Amit Kumar,Delhi,Noise-Cancelling Headphones,Electronics,4,6999.00
+ORD-1156,2026-05-06,Ananya Nair,Pune,Cable Organizer Pouch,Accessories,4,499.00
+ORD-1157,2026-05-06,Vikram Rao,Mumbai,Mechanical Keyboard,Electronics,3,3499.00
+ORD-1158,2026-02-26,Neha Singh,Pune,Ergonomic Office Chair,Furniture,5,12500.00
+ORD-1159,2026-04-05,Vikram Rao,Chennai,LED Desk Lamp,Furniture,5,1450.00
+ORD-1160,2026-03-26,Rohan Gupta,Ahmedabad,Ergonomic Office Chair,Furniture,3,12500.00
+ORD-1161,2026-03-06,Amit Kumar,Delhi,Cable Organizer Pouch,Accessories,2,499.00
+ORD-1162,2026-03-22,Rahul Verma,Bengaluru,Noise-Cancelling Headphones,Electronics,2,6999.00
+ORD-1163,2026-05-04,Pooja Iyer,Hyderabad,Mechanical Keyboard,Electronics,2,3499.00
+ORD-1164,2026-03-17,Amit Kumar,Chennai,USB-C Hub,Electronics,3,1899.00
+ORD-1165,2026-01-04,Arjun Malhotra,Bengaluru,Ergonomic Office Chair,Furniture,1,12500.00
+ORD-1166,2026-01-14,Ananya Nair,Hyderabad,Cable Organizer Pouch,Accessories,2,499.00
+ORD-1167,2026-05-06,Rahul Verma,Mumbai,Stainless Steel Water Bottle,Accessories,3,850.00
+ORD-1168,2026-05-01,Vikram Rao,Ahmedabad,Standing Desk Converter,Furniture,2,8900.00
+ORD-1169,2026-01-14,Pooja Iyer,Ahmedabad,Mechanical Keyboard,Electronics,1,3499.00
+ORD-1170,2026-04-13,Vikram Rao,Delhi,Stainless Steel Water Bottle,Accessories,1,850.00
+ORD-1171,2026-02-08,Sneha Patel,Hyderabad,Mechanical Keyboard,Electronics,2,3499.00
+ORD-1172,2026-01-31,Ananya Nair,Kolkata,Stainless Steel Water Bottle,Accessories,5,850.00
+ORD-1173,2026-02-27,Meera Pillai,Kolkata,Hardcover Notebook,Stationery,4,350.00
+ORD-1174,2026-03-18,Siddharth Jain,Kolkata,Ergonomic Office Chair,Furniture,5,12500.00
+ORD-1175,2026-01-16,Karan Mehra,Delhi,Noise-Cancelling Headphones,Electronics,2,6999.00
+ORD-1176,2026-03-09,Divya Joshi,Delhi,USB-C Hub,Electronics,2,1899.00
+ORD-1177,2026-02-14,Ananya Nair,Delhi,USB-C Hub,Electronics,1,1899.00
+ORD-1178,2026-04-15,Vikram Rao,Ahmedabad,Ergonomic Office Chair,Furniture,1,12500.00
+ORD-1179,2026-03-01,Pooja Iyer,Hyderabad,Cable Organizer Pouch,Accessories,4,499.00
+ORD-1180,2026-01-19,Divya Joshi,Pune,Ergonomic Office Chair,Furniture,5,12500.00

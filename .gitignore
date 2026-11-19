@@ -1,0 +1,31 @@
+# Environment variables & secrets (CRITICAL: Never commit these)
+.env
+*.env
+!.env.example
+
+# Python virtual environment & cache
+venv/
+.venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Node & Frontend build
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# Editor & OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# InsightIQ temporary files
+*.log
