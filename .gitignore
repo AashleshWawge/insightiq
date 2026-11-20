@@ -1,6 +1,8 @@
 # Environment variables & secrets (CRITICAL: Never commit these)
 .env
 *.env
+.env.local
+*.env.local
 !.env.example
 
 # Python virtual environment & cache
@@ -29,3 +31,4 @@ Thumbs.db
 
 # InsightIQ temporary files
 *.log
+.neon
