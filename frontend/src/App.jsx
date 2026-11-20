@@ -644,30 +644,6 @@ export default function App() {
                 </select>
               </div>
             )}
-
-            <div className="hidden sm:flex items-center gap-2">
-              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-100 text-[11px] font-medium text-slate-600">
-                <span className={`w-2 h-2 rounded-full ${backendStatus.online ? 'bg-emerald-500' : 'bg-rose-500'}`} />
-                <span>API</span>
-              </div>
-              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-100 text-[11px] font-medium text-slate-600">
-                <span className={`w-2 h-2 rounded-full ${dbStatus.connected ? 'bg-emerald-500' : 'bg-rose-500'}`} />
-                <span>Postgres</span>
-              </div>
-            </div>
-
-            <button
-              onClick={() => {
-                fetchHealth();
-                fetchDatasets();
-                if (selectedDatasetId) fetchDashboardData(selectedDatasetId);
-                fetchHistory();
-              }}
-              className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition"
-              title="Refresh"
-            >
-              <RefreshCw className="w-3.5 h-3.5" />
-            </button>
           </div>
         </div>
       </header>
