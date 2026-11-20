@@ -1571,14 +1571,21 @@ export default function App() {
                 )}
               </div>
 
-              <div className="lg:col-span-2 bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-3">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-xs font-semibold text-slate-900 uppercase tracking-wider">
-                    Dataset preview {previewData ? `(${previewData.filename})` : ''}
-                  </h3>
+              <div className="lg:col-span-2 bg-white rounded-xl p-4 sm:p-5 border border-slate-200 shadow-sm space-y-3">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-4">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <h3 className="text-xs font-semibold text-slate-900 uppercase tracking-wider shrink-0">
+                      Dataset preview
+                    </h3>
+                    {previewData && (
+                      <span className="text-xs text-slate-500 font-mono truncate">
+                        ({previewData.filename})
+                      </span>
+                    )}
+                  </div>
                   {previewData && (
-                    <span className="text-xs text-slate-400">
-                      Showing {previewData.preview_count} of {previewData.total_rows} rows
+                    <span className="text-[11px] sm:text-xs text-slate-400 font-mono whitespace-nowrap shrink-0">
+                      Showing {previewData.preview_count} of {previewData.total_rows.toLocaleString()} rows
                     </span>
                   )}
                 </div>
