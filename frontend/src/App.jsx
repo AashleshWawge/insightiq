@@ -98,8 +98,8 @@ const SCHEMA_COLUMNS = [
 ];
 
 export default function App() {
-  // Navigation: 'ask-ai' | 'analytics' | 'history' | 'data'
-  const [activeTab, setActiveTab] = useState('ask-ai');
+  // Navigation: 'analytics' | 'ask-ai' | 'data' | 'history'
+  const [activeTab, setActiveTab] = useState('analytics');
 
   // Interactive table and keyboard controls
   const questionInputRef = useRef(null);
@@ -599,17 +599,6 @@ export default function App() {
             {/* Navigation Tabs */}
             <nav className="hidden md:flex items-center space-x-1 pl-6 border-l border-slate-200">
               <button
-                onClick={() => setActiveTab('ask-ai')}
-                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition flex items-center gap-1.5 ${
-                  activeTab === 'ask-ai'
-                    ? 'bg-slate-900 text-white font-semibold'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-                }`}
-              >
-                <Terminal className="w-3.5 h-3.5" />
-                <span>Query</span>
-              </button>
-              <button
                 onClick={() => setActiveTab('analytics')}
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium transition flex items-center gap-1.5 ${
                   activeTab === 'analytics'
@@ -621,15 +610,15 @@ export default function App() {
                 <span>Analytics</span>
               </button>
               <button
-                onClick={() => { setActiveTab('history'); fetchHistory(); }}
+                onClick={() => setActiveTab('ask-ai')}
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium transition flex items-center gap-1.5 ${
-                  activeTab === 'history'
+                  activeTab === 'ask-ai'
                     ? 'bg-slate-900 text-white font-semibold'
                     : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
                 }`}
               >
-                <History className="w-3.5 h-3.5" />
-                <span>History</span>
+                <Terminal className="w-3.5 h-3.5" />
+                <span>Query</span>
               </button>
               <button
                 onClick={() => setActiveTab('data')}
@@ -641,6 +630,17 @@ export default function App() {
               >
                 <Database className="w-3.5 h-3.5" />
                 <span>Datasets</span>
+              </button>
+              <button
+                onClick={() => { setActiveTab('history'); fetchHistory(); }}
+                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition flex items-center gap-1.5 ${
+                  activeTab === 'history'
+                    ? 'bg-slate-900 text-white font-semibold'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                }`}
+              >
+                <History className="w-3.5 h-3.5" />
+                <span>History</span>
               </button>
             </nav>
           </div>
