@@ -581,22 +581,22 @@ export default function App() {
     <div className="min-h-screen bg-slate-50 text-slate-800">
       {/* Top Navbar */}
       <header className="bg-white border-b border-slate-200 sticky top-0 z-20">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
           {/* Brand */}
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center text-white font-bold text-sm tracking-tight shadow-sm">
+          <div className="flex items-center gap-3 sm:gap-4">
+            <div className="flex items-center gap-2 sm:gap-2.5">
+              <div className="w-7 h-7 sm:w-8 sm:h-8 bg-slate-900 rounded-lg flex items-center justify-center text-white font-bold text-xs sm:text-sm tracking-tight shadow-sm">
                 IQ
               </div>
-              <div className="flex items-center gap-2">
-                <span className="font-semibold text-slate-900 tracking-tight text-base">InsightIQ</span>
-                <span className="text-[11px] font-mono px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200">
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                <span className="font-semibold text-slate-900 tracking-tight text-sm sm:text-base">InsightIQ</span>
+                <span className="text-[10px] sm:text-[11px] font-mono px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200">
                   v1.0
                 </span>
               </div>
             </div>
 
-            {/* Navigation Tabs */}
+            {/* Navigation Tabs (Desktop) */}
             <nav className="hidden md:flex items-center space-x-1 pl-6 border-l border-slate-200">
               <button
                 onClick={() => setActiveTab('analytics')}
@@ -645,15 +645,15 @@ export default function App() {
             </nav>
           </div>
 
-          {/* Right Controls: Dataset Selector & Status */}
-          <div className="flex items-center gap-3">
+          {/* Right Controls: Dataset Selector */}
+          <div className="flex items-center gap-2 sm:gap-3">
             {datasets.length > 0 && (
-              <div className="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1">
-                <Layers className="w-3.5 h-3.5 text-slate-400" />
+              <div className="flex items-center gap-1.5 sm:gap-2 bg-slate-50 border border-slate-200 rounded-lg px-2 sm:px-2.5 py-1 max-w-[160px] sm:max-w-[220px] md:max-w-xs">
+                <Layers className="w-3.5 h-3.5 text-slate-400 shrink-0" />
                 <select
                   value={selectedDatasetId || ''}
                   onChange={(e) => setSelectedDatasetId(e.target.value)}
-                  className="bg-transparent text-xs font-medium text-slate-700 outline-none cursor-pointer"
+                  className="bg-transparent text-[11px] sm:text-xs font-medium text-slate-700 outline-none cursor-pointer truncate w-full"
                 >
                   {datasets.map((d) => (
                     <option key={d.id} value={d.id}>
@@ -668,7 +668,7 @@ export default function App() {
       </header>
 
       {/* Main Content Area */}
-      <main className="max-w-7xl mx-auto px-6 py-8">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-5 sm:py-8 pb-24 md:pb-8">
         
         {/* TAB 1: ASK AI (PHASES 5, 6, 7, 8) */}
         {activeTab === 'ask-ai' && (
@@ -690,16 +690,16 @@ export default function App() {
             ) : (
               <>
                 {/* Header Card */}
-                <div className="bg-white rounded-xl p-6 border border-slate-200 shadow-sm space-y-4">
-                  <div className="flex items-center justify-between">
+                <div className="bg-white rounded-xl p-4 sm:p-6 border border-slate-200 shadow-sm space-y-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div>
-                      <h2 className="text-base font-semibold text-slate-900 tracking-tight">Query data</h2>
+                      <h2 className="text-sm sm:text-base font-semibold text-slate-900 tracking-tight">Query data</h2>
                       <p className="text-xs text-slate-500 mt-0.5">
                         Ask questions in plain English to generate SQL, view charts, and inspect tables.
                       </p>
                     </div>
                     
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 flex-wrap">
                       <button
                         type="button"
                         onClick={() => setShowSchemaDrawer(!showSchemaDrawer)}
@@ -714,7 +714,7 @@ export default function App() {
                         <span>Schema ({SCHEMA_COLUMNS.length})</span>
                       </button>
 
-                      <span className="text-[11px] px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 font-mono border border-slate-200">
+                      <span className="text-[11px] px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 font-mono border border-slate-200 max-w-[150px] sm:max-w-none truncate">
                         {selectedDataset.name}
                       </span>
                     </div>
@@ -755,8 +755,8 @@ export default function App() {
                         type="text"
                         value={question}
                         onChange={(e) => setQuestion(e.target.value)}
-                        placeholder="e.g. Which product generated the highest revenue? (Press / to focus)"
-                        className="w-full text-sm pl-4 pr-36 py-2.5 border border-slate-200 rounded-lg outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400 shadow-sm transition"
+                        placeholder="e.g. Which product generated highest revenue?"
+                        className="w-full text-xs sm:text-sm pl-3 sm:pl-4 pr-24 sm:pr-36 py-2.5 sm:py-3 border border-slate-200 rounded-lg outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400 shadow-sm transition"
                       />
                       <div className="absolute right-20 text-[10px] font-mono bg-slate-100 text-slate-400 px-1.5 py-0.5 rounded border border-slate-200 pointer-events-none hidden sm:block">
                         /
@@ -764,7 +764,7 @@ export default function App() {
                       <button
                         type="submit"
                         disabled={generating || !question.trim()}
-                        className={`absolute right-1.5 top-1.5 bottom-1.5 px-3.5 rounded-md text-xs font-medium flex items-center gap-1.5 transition ${
+                        className={`absolute right-1 top-1 bottom-1 sm:right-1.5 sm:top-1.5 sm:bottom-1.5 px-3 sm:px-3.5 rounded-md text-xs font-medium flex items-center gap-1 sm:gap-1.5 transition ${
                           generating || !question.trim()
                             ? 'bg-slate-100 text-slate-400 cursor-not-allowed'
                             : 'bg-slate-900 hover:bg-slate-800 text-white shadow-sm cursor-pointer'
@@ -773,12 +773,13 @@ export default function App() {
                         {generating ? (
                           <>
                             <RefreshCw className="w-3.5 h-3.5 animate-spin" />
-                            <span>Generating...</span>
+                            <span className="hidden sm:inline">Generating...</span>
                           </>
                         ) : (
                           <>
                             <ArrowRight className="w-3.5 h-3.5" />
-                            <span>Generate SQL</span>
+                            <span className="hidden sm:inline">Generate SQL</span>
+                            <span className="sm:hidden font-medium">Generate</span>
                             <span className="text-[10px] opacity-60 font-mono hidden md:inline">⌘↵</span>
                           </>
                         )}
@@ -829,7 +830,7 @@ export default function App() {
                 {/* Generated SQL Preview Card */}
                 {queryResult && (
                   <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden space-y-0">
-                    <div className="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/70">
+                    <div className="p-3 sm:p-4 border-b border-slate-100 flex flex-wrap items-center justify-between gap-2 bg-slate-50/70">
                       <div className="flex items-center gap-2">
                         <Code2 className="w-4 h-4 text-slate-700" />
                         <h3 className="text-xs font-semibold text-slate-900 uppercase tracking-wider">Generated SQL</h3>
@@ -838,7 +839,7 @@ export default function App() {
                         </span>
                       </div>
 
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 flex-wrap">
                         {queryResult.chart_type && (
                           <span className="px-2 py-0.5 rounded text-[11px] font-medium bg-slate-100 text-slate-700 border border-slate-200 capitalize">
                             {queryResult.chart_type} view
@@ -888,7 +889,7 @@ export default function App() {
                         </p>
 
                         {/* Approval Action Banner */}
-                        <div className="p-3.5 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-between">
+                        <div className="p-3.5 rounded-lg bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                           <div>
                             <p className="font-medium text-slate-900 text-xs">Read-only execution</p>
                             <p className="text-slate-500 text-[11px]">
@@ -899,7 +900,7 @@ export default function App() {
                           <button
                             onClick={() => handleExecuteSQL()}
                             disabled={executing}
-                            className={`px-4 py-2 rounded-lg text-xs font-medium flex items-center gap-1.5 transition shadow-sm ${
+                            className={`px-4 py-2 rounded-lg text-xs font-medium flex items-center justify-center gap-1.5 transition shadow-sm w-full sm:w-auto ${
                               executing
                                 ? 'bg-slate-200 text-slate-400 cursor-not-allowed'
                                 : 'bg-slate-900 hover:bg-slate-800 active:bg-slate-950 text-white cursor-pointer'
@@ -997,20 +998,20 @@ export default function App() {
 
                     {/* Query Results Table */}
                     <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden space-y-0">
-                      <div className="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/70">
-                        <div className="flex items-center gap-2">
+                      <div className="p-3 sm:p-4 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 bg-slate-50/70">
+                        <div className="flex items-center gap-2 flex-wrap">
                           <h3 className="text-xs font-semibold text-slate-900 uppercase tracking-wider">Results</h3>
                           <span className="text-[11px] px-2 py-0.5 rounded bg-slate-100 text-slate-600 font-mono border border-slate-200">
                             {executionResult.row_count} rows ({executionResult.execution_time_ms} ms)
                           </span>
                           <span className="text-[10px] text-slate-400 hidden sm:inline">
-                            (click headers to sort, click cells to filter)
+                            (click headers to sort)
                           </span>
                         </div>
 
                         <button
                           onClick={exportCurrentTableToCSV}
-                          className="py-1 px-2.5 rounded-md text-xs font-medium bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 flex items-center gap-1.5 transition shadow-sm cursor-pointer"
+                          className="py-1 px-2.5 rounded-md text-xs font-medium bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 flex items-center justify-center gap-1.5 transition shadow-sm cursor-pointer self-start sm:self-auto"
                         >
                           <Download className="w-3.5 h-3.5 text-slate-500" />
                           <span>Export CSV</span>
@@ -1116,69 +1117,69 @@ export default function App() {
                 </div>
 
                 {summary && (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-                    <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                  <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
+                    <div className="bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
                       <div className="flex items-center justify-between text-slate-500 mb-1.5">
-                        <span className="text-[11px] font-medium uppercase tracking-wider text-slate-500">Revenue</span>
+                        <span className="text-[10px] sm:text-[11px] font-medium uppercase tracking-wider text-slate-500">Revenue</span>
                         <DollarSign className="w-4 h-4 text-slate-400" />
                       </div>
                       <div>
-                        <div className="text-xl font-semibold text-slate-900 tabular-nums">
+                        <div className="text-base sm:text-xl font-semibold text-slate-900 tabular-nums">
                           ₹{summary.total_revenue.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                         </div>
-                        <span className="text-[11px] text-slate-400">Gross sales</span>
+                        <span className="text-[10px] sm:text-[11px] text-slate-400">Gross sales</span>
                       </div>
                     </div>
 
-                    <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div className="bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
                       <div className="flex items-center justify-between text-slate-500 mb-1.5">
-                        <span className="text-[11px] font-medium uppercase tracking-wider text-slate-500">Orders</span>
+                        <span className="text-[10px] sm:text-[11px] font-medium uppercase tracking-wider text-slate-500">Orders</span>
                         <ShoppingCart className="w-4 h-4 text-slate-400" />
                       </div>
                       <div>
-                        <div className="text-xl font-semibold text-slate-900 tabular-nums">
+                        <div className="text-base sm:text-xl font-semibold text-slate-900 tabular-nums">
                           {summary.total_orders.toLocaleString()}
                         </div>
-                        <span className="text-[11px] text-slate-400">Completed</span>
+                        <span className="text-[10px] sm:text-[11px] text-slate-400">Completed</span>
                       </div>
                     </div>
 
-                    <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div className="bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
                       <div className="flex items-center justify-between text-slate-500 mb-1.5">
-                        <span className="text-[11px] font-medium uppercase tracking-wider text-slate-500">Units Sold</span>
+                        <span className="text-[10px] sm:text-[11px] font-medium uppercase tracking-wider text-slate-500">Units Sold</span>
                         <Package className="w-4 h-4 text-slate-400" />
                       </div>
                       <div>
-                        <div className="text-xl font-semibold text-slate-900 tabular-nums">
+                        <div className="text-base sm:text-xl font-semibold text-slate-900 tabular-nums">
                           {summary.total_units_sold.toLocaleString()}
                         </div>
-                        <span className="text-[11px] text-slate-400">Items</span>
+                        <span className="text-[10px] sm:text-[11px] text-slate-400">Items</span>
                       </div>
                     </div>
 
-                    <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div className="bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
                       <div className="flex items-center justify-between text-slate-500 mb-1.5">
-                        <span className="text-[11px] font-medium uppercase tracking-wider text-slate-500">Customers</span>
+                        <span className="text-[10px] sm:text-[11px] font-medium uppercase tracking-wider text-slate-500">Customers</span>
                         <Users className="w-4 h-4 text-slate-400" />
                       </div>
                       <div>
-                        <div className="text-xl font-semibold text-slate-900 tabular-nums">
+                        <div className="text-base sm:text-xl font-semibold text-slate-900 tabular-nums">
                           {summary.unique_customers.toLocaleString()}
                         </div>
-                        <span className="text-[11px] text-slate-400">Unique</span>
+                        <span className="text-[10px] sm:text-[11px] text-slate-400">Unique</span>
                       </div>
                     </div>
 
-                    <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div className="bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between col-span-2 sm:col-span-1">
                       <div className="flex items-center justify-between text-slate-500 mb-1.5">
-                        <span className="text-[11px] font-medium uppercase tracking-wider text-slate-500">Avg Order</span>
+                        <span className="text-[10px] sm:text-[11px] font-medium uppercase tracking-wider text-slate-500">Avg Order</span>
                         <TrendingUp className="w-4 h-4 text-slate-400" />
                       </div>
                       <div>
-                        <div className="text-xl font-semibold text-slate-900 tabular-nums">
+                        <div className="text-base sm:text-xl font-semibold text-slate-900 tabular-nums">
                           ₹{summary.average_order_value.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                         </div>
-                        <span className="text-[11px] text-slate-400">Per order</span>
+                        <span className="text-[10px] sm:text-[11px] text-slate-400">Per order</span>
                       </div>
                     </div>
                   </div>
@@ -1356,7 +1357,7 @@ export default function App() {
                       key={item.id}
                       className="p-4 rounded-xl border border-slate-200 bg-slate-50/60 hover:bg-slate-50 transition space-y-2.5"
                     >
-                      <div className="flex items-start justify-between gap-4">
+                      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2.5 sm:gap-4">
                         <div className="space-y-1">
                           <p className="text-xs font-medium text-slate-900">{item.question}</p>
                           <div className="flex items-center gap-2 text-[11px] text-slate-400 font-mono">
@@ -1368,7 +1369,7 @@ export default function App() {
                           </div>
                         </div>
 
-                        <div className="flex items-center gap-2 shrink-0">
+                        <div className="flex items-center gap-2 shrink-0 self-start sm:self-auto">
                           {/* Re-run button */}
                           <button
                             onClick={() => {
@@ -1457,14 +1458,14 @@ export default function App() {
                   </label>
                 </div>
 
-                <div className="flex items-center justify-between">
-                  <p className="text-xs text-slate-400">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <p className="text-[11px] sm:text-xs text-slate-400">
                     Sample file: <code className="bg-slate-100 px-1.5 py-0.5 rounded text-slate-600 font-mono">sample_data/sales_sample.csv</code>
                   </p>
                   <button
                     type="submit"
                     disabled={!uploadFile || uploading}
-                    className={`py-2 px-4 rounded-lg text-xs font-medium transition flex items-center gap-1.5 ${
+                    className={`py-2 px-4 rounded-lg text-xs font-medium transition flex items-center justify-center gap-1.5 w-full sm:w-auto ${
                       !uploadFile || uploading
                         ? 'bg-slate-100 text-slate-400 cursor-not-allowed'
                         : 'bg-slate-900 hover:bg-slate-800 text-white shadow-sm cursor-pointer'
@@ -1630,6 +1631,54 @@ export default function App() {
         )}
 
       </main>
+
+      {/* Mobile Bottom Navigation Bar */}
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-white/95 backdrop-blur-md border-t border-slate-200 px-3 py-1.5 flex items-center justify-around shadow-lg">
+        <button
+          onClick={() => setActiveTab('analytics')}
+          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-lg text-[10px] font-medium transition cursor-pointer ${
+            activeTab === 'analytics'
+              ? 'text-slate-900 font-semibold'
+              : 'text-slate-400 hover:text-slate-600'
+          }`}
+        >
+          <BarChart3 className="w-4 h-4" />
+          <span>Analytics</span>
+        </button>
+        <button
+          onClick={() => setActiveTab('ask-ai')}
+          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-lg text-[10px] font-medium transition cursor-pointer ${
+            activeTab === 'ask-ai'
+              ? 'text-slate-900 font-semibold'
+              : 'text-slate-400 hover:text-slate-600'
+          }`}
+        >
+          <Terminal className="w-4 h-4" />
+          <span>Query</span>
+        </button>
+        <button
+          onClick={() => setActiveTab('data')}
+          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-lg text-[10px] font-medium transition cursor-pointer ${
+            activeTab === 'data'
+              ? 'text-slate-900 font-semibold'
+              : 'text-slate-400 hover:text-slate-600'
+          }`}
+        >
+          <Database className="w-4 h-4" />
+          <span>Datasets</span>
+        </button>
+        <button
+          onClick={() => { setActiveTab('history'); fetchHistory(); }}
+          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-lg text-[10px] font-medium transition cursor-pointer ${
+            activeTab === 'history'
+              ? 'text-slate-900 font-semibold'
+              : 'text-slate-400 hover:text-slate-600'
+          }`}
+        >
+          <History className="w-4 h-4" />
+          <span>History</span>
+        </button>
+      </nav>
     </div>
   );
 }
