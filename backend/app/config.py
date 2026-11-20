@@ -28,8 +28,15 @@ if DATABASE_URL.startswith("postgresql://"):
 GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
 GROQ_MODEL = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile")
 
-# CORS allowed frontend origins
-CORS_ORIGINS = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-]
+# CORS settings
+cors_env = os.getenv("CORS_ORIGINS", "")
+if cors_env:
+    CORS_ORIGINS = [origin.strip() for origin in cors_env.split(",") if origin.strip()]
+else:
+    CORS_ORIGINS = [
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+    ]
+
+# Regex pattern allowing all Vercel deployment and preview URLs
+CORS_ORIGIN_REGEX = os.getenv("CORS_ORIGIN_REGEX", r"https://.*\.vercel\.app")
