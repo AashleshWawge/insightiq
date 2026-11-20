@@ -36,6 +36,8 @@ else:
     CORS_ORIGINS = [
         "http://localhost:5173",
         "http://127.0.0.1:5173",
+        "https://insightiq-flax.vercel.app",
+        "https://insightiq-flax.vercel.app/",
     ]
 
 # Regex pattern allowing all Vercel deployment and preview URLs
