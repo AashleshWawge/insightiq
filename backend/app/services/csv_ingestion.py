@@ -37,8 +37,10 @@ COLUMN_ALIASES = {
     "city": ["city", "location", "town", "customer_city", "region"],
 }
 
-# Max file size: 10 MB for MVP safety
-MAX_FILE_SIZE = 10 * 1024 * 1024
+# Safe limits for free-tier resource protection
+MAX_FILE_SIZE = 2 * 1024 * 1024  # 2 MB max file size
+MAX_ROW_COUNT = 2500             # 2,500 rows maximum per dataset
+MAX_STORED_DATASETS = 10         # Retain at most 10 active datasets in database
 
 
 def validate_and_ingest_csv(
@@ -51,7 +53,7 @@ def validate_and_ingest_csv(
     Inserts valid rows into PostgreSQL within a single atomic database transaction.
     """
     if len(file_bytes) > MAX_FILE_SIZE:
-        raise ValueError("File exceeds maximum allowed size of 10 MB.")
+        raise ValueError("File exceeds maximum allowed size of 2 MB for free-tier resource safety.")
 
     if not file_bytes:
         raise ValueError("The uploaded CSV file is empty.")
@@ -88,6 +90,8 @@ def validate_and_ingest_csv(
         raise ValueError(f"Missing required columns in CSV: {', '.join(missing_cols)}")
 
     total_rows = len(df)
+    if total_rows > MAX_ROW_COUNT:
+        raise ValueError(f"CSV contains {total_rows} rows, exceeding the limit of {MAX_ROW_COUNT} rows.")
 
     # 4. Data validation and cleaning
     # Clean text columns
@@ -131,6 +135,14 @@ def validate_and_ingest_csv(
     )
 
     try:
+        # Auto-prune oldest datasets if cap reached to protect free storage
+        existing_datasets = db.query(Dataset).order_by(Dataset.created_at.asc()).all()
+        if len(existing_datasets) >= MAX_STORED_DATASETS:
+            excess = len(existing_datasets) - MAX_STORED_DATASETS + 1
+            for old_ds in existing_datasets[:excess]:
+                db.delete(old_ds)
+            db.flush()
+
         db.add(dataset)
         # Flush to register dataset.id before creating foreign-keyed sales rows
         db.flush()

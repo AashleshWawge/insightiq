@@ -1,9 +1,10 @@
 import uuid
 from typing import List
-from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Query, status
+from fastapi import APIRouter, Depends, HTTPException, Request, UploadFile, File, Query, status
 from sqlalchemy.orm import Session
 
 from app.database import get_db
+from app.limiter import limiter
 from app.models.dataset import Dataset
 from app.models.sale import Sale
 from app.schemas.dataset import (
@@ -18,7 +19,9 @@ router = APIRouter(prefix="/datasets", tags=["Datasets"])
 
 
 @router.post("/upload", response_model=DatasetUploadResponse, status_code=status.HTTP_201_CREATED)
+@limiter.limit("5/minute")
 async def upload_dataset(
+    request: Request,
     file: UploadFile = File(...),
     db: Session = Depends(get_db),
 ):

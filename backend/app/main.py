@@ -10,6 +10,10 @@ from app.routes.dashboard import router as dashboard_router
 from app.routes.ai import router as ai_router
 from app.routes.query_history import router as query_history_router
 
+from slowapi import _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
+from app.limiter import limiter
+
 # Create database tables automatically if they do not already exist
 Base.metadata.create_all(bind=engine)
 
@@ -18,6 +22,10 @@ app = FastAPI(
     description="Backend API for InsightIQ AI-Powered Business Intelligence Dashboard",
     version="1.0.0",
 )
+
+# Attach rate limiter to application state
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # Configure CORS (Cross-Origin Resource Sharing)
 app.add_middleware(

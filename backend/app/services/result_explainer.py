@@ -37,8 +37,8 @@ def explain_query_results(
     """
     client = get_groq_client()
 
-    # Cap sample rows to prevent token waste
-    limited_sample = sample_rows[:10]
+    # Cap sample rows to 5 to minimize LLM token consumption
+    limited_sample = sample_rows[:5]
 
     user_content = f"""
 User Question: {question}
@@ -58,7 +58,7 @@ Sample Rows:
             ],
             response_format={"type": "json_object"},
             temperature=0.2,
-            max_tokens=400,
+            max_tokens=250,
         )
 
         latency_ms = round((time.perf_counter() - start_time) * 1000, 2)

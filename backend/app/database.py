@@ -3,13 +3,13 @@ from sqlalchemy.orm import declarative_base, sessionmaker
 from typing import Generator
 from app.config import DATABASE_URL
 
-# The Engine is the starting point for any SQLAlchemy application.
-# It maintains a pool of database connections that can be reused.
+# The Engine maintains a small pool of database connections to support Neon scale-to-zero.
 engine = create_engine(
     DATABASE_URL,
-    pool_pre_ping=True,  # Automatically check if a connection is still alive before using it
-    pool_size=5,         # Keep up to 5 connections in the pool
-    max_overflow=10,     # Allow up to 10 additional connections during traffic spikes
+    pool_pre_ping=True,  # Check if connection is alive before using it
+    pool_size=2,         # Keep connections low to prevent holding idle connections against Neon
+    max_overflow=3,      # Allow modest overflow during concurrent requests
+    pool_recycle=300,    # Recycle connections after 5 minutes so Neon compute can scale to zero
 )
 
 # SessionLocal is a class factory for creating new Session objects.

@@ -23,7 +23,7 @@ class AITestResponse(BaseModel):
 class GenerateQueryRequest(BaseModel):
     """Schema for generating SQL from natural language."""
     dataset_id: uuid.UUID = Field(..., description="ID of the dataset being queried")
-    question: str = Field(..., min_length=3, description="Natural language business question")
+    question: str = Field(..., min_length=3, max_length=200, description="Natural language business question")
 
 
 class GenerateQueryResponse(BaseModel):
@@ -41,7 +41,7 @@ class ExecuteQueryRequest(BaseModel):
     """Schema for executing a validated SQL query."""
     dataset_id: uuid.UUID = Field(..., description="Dataset ID to isolate and execute against")
     sql: str = Field(..., min_length=5, description="SQL query approved by the user for execution")
-    question: Optional[str] = Field(None, description="Original natural-language question for history tracking")
+    question: Optional[str] = Field(None, max_length=200, description="Original natural-language question for history tracking")
 
 
 class ExecuteQueryResponse(BaseModel):
@@ -57,9 +57,9 @@ class ExecuteQueryResponse(BaseModel):
 
 class ExplainResultsRequest(BaseModel):
     """Schema for AI result explanation and chart recommendation."""
-    question: str = Field(..., description="The user's original business question")
+    question: str = Field(..., max_length=200, description="The user's original business question")
     columns: List[str] = Field(..., description="List of returned column names")
-    sample_rows: List[Dict[str, Any]] = Field(..., description="Sample of returned data rows (up to 10)")
+    sample_rows: List[Dict[str, Any]] = Field(..., description="Sample of returned data rows (up to 5)")
     total_row_count: int = Field(..., description="Total number of rows returned by PostgreSQL")
 
 
