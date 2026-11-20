@@ -2,8 +2,8 @@ import time
 import uuid
 from decimal import Decimal
 from datetime import date, datetime
-from typing import Any, Dict, List
-from fastapi import APIRouter, Depends, HTTPException, Request, status
+from typing import Any, Dict, List, Optional
+from fastapi import APIRouter, Depends, HTTPException, Request, Header, status
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
@@ -80,6 +80,7 @@ def test_ai_connection(
 def generate_query_endpoint(
     request: Request,
     payload: GenerateQueryRequest,
+    x_session_id: Optional[str] = Header(None, alias="X-Session-ID"),
     db: Session = Depends(get_db),
 ):
     """
@@ -87,7 +88,7 @@ def generate_query_endpoint(
     Does NOT execute the query. The user must review the SQL before execution.
     """
     dataset = db.query(Dataset).filter(Dataset.id == payload.dataset_id).first()
-    if not dataset:
+    if not dataset or (not dataset.is_demo and dataset.session_id and dataset.session_id != x_session_id):
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Dataset with ID '{payload.dataset_id}' not found.",
@@ -111,6 +112,7 @@ def generate_query_endpoint(
 def execute_query_endpoint(
     request: Request,
     payload: ExecuteQueryRequest,
+    x_session_id: Optional[str] = Header(None, alias="X-Session-ID"),
     db: Session = Depends(get_db),
 ):
     """
@@ -123,7 +125,7 @@ def execute_query_endpoint(
     6. Returns rows, columns, and execution timing.
     """
     dataset = db.query(Dataset).filter(Dataset.id == payload.dataset_id).first()
-    if not dataset:
+    if not dataset or (not dataset.is_demo and dataset.session_id and dataset.session_id != x_session_id):
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Dataset with ID '{payload.dataset_id}' not found.",

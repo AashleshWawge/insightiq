@@ -1,6 +1,7 @@
 import uuid
-from typing import List
-from fastapi import APIRouter, Depends, HTTPException, Request, UploadFile, File, Query, status
+from typing import List, Optional
+from fastapi import APIRouter, Depends, HTTPException, Request, Header, UploadFile, File, Query, status
+from sqlalchemy import or_
 from sqlalchemy.orm import Session
 
 from app.database import get_db
@@ -23,10 +24,11 @@ router = APIRouter(prefix="/datasets", tags=["Datasets"])
 async def upload_dataset(
     request: Request,
     file: UploadFile = File(...),
+    x_session_id: Optional[str] = Header(None, alias="X-Session-ID"),
     db: Session = Depends(get_db),
 ):
     """
-    Upload and ingest a CSV sales dataset.
+    Upload and ingest a CSV sales dataset isolated to the visitor's session.
     Validates headers, data types, and positive quantities/prices using Pandas.
     Saves records atomically to PostgreSQL.
     """
@@ -42,6 +44,7 @@ async def upload_dataset(
             file_bytes=file_bytes,
             filename=file.filename,
             db=db,
+            session_id=x_session_id,
         )
         return summary
     except ValueError as val_err:
@@ -57,21 +60,41 @@ async def upload_dataset(
 
 
 @router.get("", response_model=List[DatasetResponse])
-def list_datasets(db: Session = Depends(get_db)):
+def list_datasets(
+    x_session_id: Optional[str] = Header(None, alias="X-Session-ID"),
+    db: Session = Depends(get_db),
+):
     """
-    Retrieve all uploaded datasets, sorted by newest first.
+    Retrieve datasets visible to the visitor:
+    - Public demo datasets (is_demo == True)
+    - Datasets uploaded in the visitor's current browser session
     """
-    datasets = db.query(Dataset).order_by(Dataset.created_at.desc()).all()
+    query = db.query(Dataset)
+    if x_session_id:
+        query = query.filter(
+            or_(
+                Dataset.session_id == x_session_id,
+                Dataset.is_demo == True,
+            )
+        )
+    else:
+        query = query.filter(Dataset.is_demo == True)
+
+    datasets = query.order_by(Dataset.is_demo.desc(), Dataset.created_at.desc()).all()
     return datasets
 
 
 @router.get("/{dataset_id}", response_model=DatasetResponse)
-def get_dataset(dataset_id: uuid.UUID, db: Session = Depends(get_db)):
+def get_dataset(
+    dataset_id: uuid.UUID,
+    x_session_id: Optional[str] = Header(None, alias="X-Session-ID"),
+    db: Session = Depends(get_db),
+):
     """
     Retrieve details for a single dataset by its UUID.
     """
     dataset = db.query(Dataset).filter(Dataset.id == dataset_id).first()
-    if not dataset:
+    if not dataset or (not dataset.is_demo and dataset.session_id and dataset.session_id != x_session_id):
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Dataset not found.",
@@ -83,13 +106,14 @@ def get_dataset(dataset_id: uuid.UUID, db: Session = Depends(get_db)):
 def preview_dataset(
     dataset_id: uuid.UUID,
     limit: int = Query(10, ge=1, le=100, description="Number of preview rows to return"),
+    x_session_id: Optional[str] = Header(None, alias="X-Session-ID"),
     db: Session = Depends(get_db),
 ):
     """
     Preview the first N rows of an imported sales dataset.
     """
     dataset = db.query(Dataset).filter(Dataset.id == dataset_id).first()
-    if not dataset:
+    if not dataset or (not dataset.is_demo and dataset.session_id and dataset.session_id != x_session_id):
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Dataset not found.",
@@ -113,7 +137,11 @@ def preview_dataset(
 
 
 @router.delete("/{dataset_id}", status_code=status.HTTP_200_OK)
-def delete_dataset(dataset_id: uuid.UUID, db: Session = Depends(get_db)):
+def delete_dataset(
+    dataset_id: uuid.UUID,
+    x_session_id: Optional[str] = Header(None, alias="X-Session-ID"),
+    db: Session = Depends(get_db),
+):
     """
     Delete a dataset and cascade-delete all its associated sales records.
     """
@@ -122,6 +150,18 @@ def delete_dataset(dataset_id: uuid.UUID, db: Session = Depends(get_db)):
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Dataset not found.",
+        )
+
+    if dataset.is_demo:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Demo datasets are read-only and cannot be deleted.",
+        )
+
+    if dataset.session_id and dataset.session_id != x_session_id:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="You are not authorized to delete this dataset.",
         )
 
     db.delete(dataset)

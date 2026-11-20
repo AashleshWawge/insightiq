@@ -1,6 +1,6 @@
 import uuid
 from datetime import datetime, timezone
-from sqlalchemy import Column, String, Integer, DateTime
+from sqlalchemy import Column, String, Integer, DateTime, Boolean
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
@@ -23,6 +23,8 @@ class Dataset(Base):
     original_filename = Column(String(255), nullable=False)
     row_count = Column(Integer, default=0, nullable=False)
     status = Column(String(50), default="ready", nullable=False)  # uploaded, processing, ready, failed
+    session_id = Column(String(64), index=True, nullable=True)
+    is_demo = Column(Boolean, default=False, nullable=False)
     created_at = Column(DateTime(timezone=True), default=utc_now, nullable=False)
 
     # Cascade delete ensures that deleting a dataset also removes all associated sales and history

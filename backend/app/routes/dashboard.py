@@ -1,6 +1,6 @@
 import uuid
-from typing import List
-from fastapi import APIRouter, Depends, HTTPException, Query, status
+from typing import List, Optional
+from fastapi import APIRouter, Depends, HTTPException, Header, Query, status
 from sqlalchemy.orm import Session
 
 from app.database import get_db
@@ -23,10 +23,10 @@ from app.services.dashboard import (
 router = APIRouter(prefix="/dashboard", tags=["Dashboard"])
 
 
-def _verify_dataset_exists(dataset_id: uuid.UUID, db: Session) -> Dataset:
-    """Helper to verify that the requested dataset exists."""
+def _verify_dataset_exists(dataset_id: uuid.UUID, db: Session, x_session_id: Optional[str] = None) -> Dataset:
+    """Helper to verify that the requested dataset exists and belongs to the session or is a demo."""
     dataset = db.query(Dataset).filter(Dataset.id == dataset_id).first()
-    if not dataset:
+    if not dataset or (not dataset.is_demo and dataset.session_id and dataset.session_id != x_session_id):
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Dataset with ID '{dataset_id}' not found.",
@@ -35,7 +35,11 @@ def _verify_dataset_exists(dataset_id: uuid.UUID, db: Session) -> Dataset:
 
 
 @router.get("/{dataset_id}/summary", response_model=DashboardSummaryResponse)
-def get_summary_metrics(dataset_id: uuid.UUID, db: Session = Depends(get_db)):
+def get_summary_metrics(
+    dataset_id: uuid.UUID,
+    x_session_id: Optional[str] = Header(None, alias="X-Session-ID"),
+    db: Session = Depends(get_db),
+):
     """
     Get high-level business KPI metrics:
     - Total Revenue
@@ -44,34 +48,46 @@ def get_summary_metrics(dataset_id: uuid.UUID, db: Session = Depends(get_db)):
     - Unique Customers
     - Average Order Value
     """
-    _verify_dataset_exists(dataset_id, db)
+    _verify_dataset_exists(dataset_id, db, x_session_id)
     return get_dashboard_summary(db, dataset_id)
 
 
 @router.get("/{dataset_id}/monthly-revenue", response_model=List[MonthlyRevenueItem])
-def get_monthly_revenue_metrics(dataset_id: uuid.UUID, db: Session = Depends(get_db)):
+def get_monthly_revenue_metrics(
+    dataset_id: uuid.UUID,
+    x_session_id: Optional[str] = Header(None, alias="X-Session-ID"),
+    db: Session = Depends(get_db),
+):
     """
     Get chronological monthly sales revenue and order counts.
     """
-    _verify_dataset_exists(dataset_id, db)
+    _verify_dataset_exists(dataset_id, db, x_session_id)
     return get_monthly_revenue(db, dataset_id)
 
 
 @router.get("/{dataset_id}/category-revenue", response_model=List[CategoryRevenueItem])
-def get_category_revenue_metrics(dataset_id: uuid.UUID, db: Session = Depends(get_db)):
+def get_category_revenue_metrics(
+    dataset_id: uuid.UUID,
+    x_session_id: Optional[str] = Header(None, alias="X-Session-ID"),
+    db: Session = Depends(get_db),
+):
     """
     Get sales revenue and units sold grouped by product category.
     """
-    _verify_dataset_exists(dataset_id, db)
+    _verify_dataset_exists(dataset_id, db, x_session_id)
     return get_category_revenue(db, dataset_id)
 
 
 @router.get("/{dataset_id}/city-revenue", response_model=List[CityRevenueItem])
-def get_city_revenue_metrics(dataset_id: uuid.UUID, db: Session = Depends(get_db)):
+def get_city_revenue_metrics(
+    dataset_id: uuid.UUID,
+    x_session_id: Optional[str] = Header(None, alias="X-Session-ID"),
+    db: Session = Depends(get_db),
+):
     """
     Get sales revenue and order counts grouped by customer city.
     """
-    _verify_dataset_exists(dataset_id, db)
+    _verify_dataset_exists(dataset_id, db, x_session_id)
     return get_city_revenue(db, dataset_id)
 
 
@@ -79,10 +95,11 @@ def get_city_revenue_metrics(dataset_id: uuid.UUID, db: Session = Depends(get_db
 def get_top_products_metrics(
     dataset_id: uuid.UUID,
     limit: int = Query(5, ge=1, le=20, description="Number of top products to return"),
+    x_session_id: Optional[str] = Header(None, alias="X-Session-ID"),
     db: Session = Depends(get_db),
 ):
     """
     Get top selling products ranked by revenue.
     """
-    _verify_dataset_exists(dataset_id, db)
+    _verify_dataset_exists(dataset_id, db, x_session_id)
     return get_top_products(db, dataset_id, limit=limit)

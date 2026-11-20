@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy import text
 
 from app.config import CORS_ORIGINS, CORS_ORIGIN_REGEX
 from app.database import engine, Base
@@ -16,6 +17,17 @@ from app.limiter import limiter
 
 # Create database tables automatically if they do not already exist
 Base.metadata.create_all(bind=engine)
+
+# Ensure session_id and is_demo columns exist on PostgreSQL datasets table
+try:
+    with engine.connect() as conn:
+        conn.execute(text("ALTER TABLE datasets ADD COLUMN IF NOT EXISTS session_id VARCHAR(64);"))
+        conn.execute(text("CREATE INDEX IF NOT EXISTS ix_datasets_session_id ON datasets (session_id);"))
+        conn.execute(text("ALTER TABLE datasets ADD COLUMN IF NOT EXISTS is_demo BOOLEAN NOT NULL DEFAULT FALSE;"))
+        conn.execute(text("UPDATE datasets SET is_demo = TRUE WHERE session_id IS NULL;"))
+        conn.commit()
+except Exception as exc:
+    print(f"Schema update note: {exc}")
 
 app = FastAPI(
     title="InsightIQ API",

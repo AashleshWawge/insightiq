@@ -1,6 +1,6 @@
 import io
 import uuid
-from typing import Dict, Any, Tuple
+from typing import Dict, Any, Tuple, Optional
 import pandas as pd
 from sqlalchemy.orm import Session
 
@@ -40,13 +40,15 @@ COLUMN_ALIASES = {
 # Safe limits for free-tier resource protection
 MAX_FILE_SIZE = 2 * 1024 * 1024  # 2 MB max file size
 MAX_ROW_COUNT = 2500             # 2,500 rows maximum per dataset
-MAX_STORED_DATASETS = 10         # Retain at most 10 active datasets in database
+MAX_USER_DATASETS = 3            # Retain at most 3 datasets per anonymous session
+MAX_GLOBAL_NON_DEMO = 15         # Retain at most 15 non-demo datasets in total
 
 
 def validate_and_ingest_csv(
     file_bytes: bytes,
     filename: str,
     db: Session,
+    session_id: Optional[str] = None,
 ) -> Dict[str, Any]:
     """
     Parses and validates an uploaded CSV file using Pandas.
@@ -132,14 +134,35 @@ def validate_and_ingest_csv(
         original_filename=filename,
         row_count=imported_rows,
         status="ready",
+        session_id=session_id,
+        is_demo=False,
     )
 
     try:
-        # Auto-prune oldest datasets if cap reached to protect free storage
-        existing_datasets = db.query(Dataset).order_by(Dataset.created_at.asc()).all()
-        if len(existing_datasets) >= MAX_STORED_DATASETS:
-            excess = len(existing_datasets) - MAX_STORED_DATASETS + 1
-            for old_ds in existing_datasets[:excess]:
+        # 1. Prune per session: keep at most MAX_USER_DATASETS per visitor
+        if session_id:
+            user_datasets = (
+                db.query(Dataset)
+                .filter(Dataset.session_id == session_id, Dataset.is_demo == False)
+                .order_by(Dataset.created_at.asc())
+                .all()
+            )
+            if len(user_datasets) >= MAX_USER_DATASETS:
+                excess_user = len(user_datasets) - MAX_USER_DATASETS + 1
+                for old_ds in user_datasets[:excess_user]:
+                    db.delete(old_ds)
+                db.flush()
+
+        # 2. Prune globally: keep at most MAX_GLOBAL_NON_DEMO total non-demo datasets
+        global_non_demo = (
+            db.query(Dataset)
+            .filter(Dataset.is_demo == False)
+            .order_by(Dataset.created_at.asc())
+            .all()
+        )
+        if len(global_non_demo) >= MAX_GLOBAL_NON_DEMO:
+            excess_global = len(global_non_demo) - MAX_GLOBAL_NON_DEMO + 1
+            for old_ds in global_non_demo[:excess_global]:
                 db.delete(old_ds)
             db.flush()
 

@@ -2,11 +2,12 @@ import io
 import csv
 import uuid
 from typing import List, Optional
-from fastapi import APIRouter, Depends, HTTPException, Query, status, Response
+from fastapi import APIRouter, Depends, HTTPException, Header, Query, status, Response
 from sqlalchemy.orm import Session
-from sqlalchemy import text
+from sqlalchemy import text, or_
 
 from app.database import get_db
+from app.models.dataset import Dataset
 from app.models.query_history import QueryHistory
 from app.schemas.query_history import QueryHistoryResponse
 from app.services.sql_validator import validate_and_sanitize_sql
@@ -18,12 +19,23 @@ router = APIRouter(prefix="/query-history", tags=["Query History"])
 def get_query_history(
     dataset_id: Optional[uuid.UUID] = Query(None, description="Filter history by dataset"),
     limit: int = Query(50, ge=1, le=100, description="Max history items to return"),
+    x_session_id: Optional[str] = Header(None, alias="X-Session-ID"),
     db: Session = Depends(get_db),
 ):
     """
-    Retrieve past questions and executed queries, sorted by newest first.
+    Retrieve past questions and executed queries for the visitor's accessible datasets.
     """
-    query = db.query(QueryHistory)
+    query = db.query(QueryHistory).join(Dataset, QueryHistory.dataset_id == Dataset.id)
+    if x_session_id:
+        query = query.filter(
+            or_(
+                Dataset.session_id == x_session_id,
+                Dataset.is_demo == True,
+            )
+        )
+    else:
+        query = query.filter(Dataset.is_demo == True)
+
     if dataset_id:
         query = query.filter(QueryHistory.dataset_id == dataset_id)
     history_items = query.order_by(QueryHistory.created_at.desc()).limit(limit).all()

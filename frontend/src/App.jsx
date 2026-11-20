@@ -56,6 +56,25 @@ import {
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api';
 
+const getSessionId = () => {
+  try {
+    let sid = localStorage.getItem('insightiq_session_id');
+    if (!sid) {
+      sid = 'sess_' + (typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2) + Date.now().toString(36));
+      localStorage.setItem('insightiq_session_id', sid);
+    }
+    return sid;
+  } catch {
+    return 'default_session';
+  }
+};
+
+const apiFetch = (url, options = {}) => {
+  const headers = new Headers(options.headers || {});
+  headers.set('X-Session-ID', getSessionId());
+  return fetch(url, { ...options, headers });
+};
+
 const COLORS = ['#4f46e5', '#06b6d4', '#10b981', '#f59e0b', '#ec4899', '#8b5cf6'];
 
 const EXAMPLE_QUESTIONS = [
@@ -138,14 +157,14 @@ export default function App() {
   // 1. Health Checks
   const fetchHealth = async () => {
     try {
-      const res = await fetch(`${API_BASE}/health`);
+      const res = await apiFetch(`${API_BASE}/health`);
       setBackendStatus({ loading: false, online: res.ok });
     } catch {
       setBackendStatus({ loading: false, online: false });
     }
 
     try {
-      const res = await fetch(`${API_BASE}/health/database`);
+      const res = await apiFetch(`${API_BASE}/health/database`);
       if (res.ok) {
         const data = await res.json();
         setDbStatus({ loading: false, connected: true, latency: data.latency_ms });
@@ -161,7 +180,7 @@ export default function App() {
   const fetchDatasets = async () => {
     setLoadingDatasets(true);
     try {
-      const res = await fetch(`${API_BASE}/datasets`);
+      const res = await apiFetch(`${API_BASE}/datasets`);
       if (!res.ok) throw new Error('Failed to load datasets');
       const data = await res.json();
       setDatasets(data);
@@ -180,11 +199,11 @@ export default function App() {
     if (!datasetId) return;
     try {
       const [sumRes, monRes, catRes, citRes, topRes] = await Promise.all([
-        fetch(`${API_BASE}/dashboard/${datasetId}/summary`),
-        fetch(`${API_BASE}/dashboard/${datasetId}/monthly-revenue`),
-        fetch(`${API_BASE}/dashboard/${datasetId}/category-revenue`),
-        fetch(`${API_BASE}/dashboard/${datasetId}/city-revenue`),
-        fetch(`${API_BASE}/dashboard/${datasetId}/top-products?limit=5`),
+        apiFetch(`${API_BASE}/dashboard/${datasetId}/summary`),
+        apiFetch(`${API_BASE}/dashboard/${datasetId}/monthly-revenue`),
+        apiFetch(`${API_BASE}/dashboard/${datasetId}/category-revenue`),
+        apiFetch(`${API_BASE}/dashboard/${datasetId}/city-revenue`),
+        apiFetch(`${API_BASE}/dashboard/${datasetId}/top-products?limit=5`),
       ]);
 
       if (sumRes.ok) setSummary(await sumRes.json());
@@ -202,7 +221,7 @@ export default function App() {
     if (!datasetId) return;
     setLoadingPreview(true);
     try {
-      const res = await fetch(`${API_BASE}/datasets/${datasetId}/preview?limit=10`);
+      const res = await apiFetch(`${API_BASE}/datasets/${datasetId}/preview?limit=10`);
       if (res.ok) setPreviewData(await res.json());
     } catch (err) {
       console.error(err);
@@ -218,7 +237,7 @@ export default function App() {
       const url = selectedDatasetId
         ? `${API_BASE}/query-history?dataset_id=${selectedDatasetId}`
         : `${API_BASE}/query-history`;
-      const res = await fetch(url);
+      const res = await apiFetch(url);
       if (res.ok) {
         setHistoryItems(await res.json());
       }
@@ -244,7 +263,7 @@ export default function App() {
     setCopiedSql(false);
 
     try {
-      const res = await fetch(`${API_BASE}/ai/generate-query`, {
+      const res = await apiFetch(`${API_BASE}/ai/generate-query`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -276,7 +295,7 @@ export default function App() {
     setDynamicChartType(null);
 
     try {
-      const res = await fetch(`${API_BASE}/ai/execute-query`, {
+      const res = await apiFetch(`${API_BASE}/ai/execute-query`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -308,13 +327,13 @@ export default function App() {
   const requestAIExplanation = async (userQuestion, cols, rows, totalCount) => {
     setExplainingResult(true);
     try {
-      const res = await fetch(`${API_BASE}/ai/explain-results`, {
+      const res = await apiFetch(`${API_BASE}/ai/explain-results`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           question: userQuestion,
           columns: cols,
-          sample_rows: rows.slice(0, 10),
+          sample_rows: rows.slice(0, 5),
           total_row_count: totalCount,
         }),
       });
@@ -371,7 +390,7 @@ export default function App() {
     formData.append('file', uploadFile);
 
     try {
-      const res = await fetch(`${API_BASE}/datasets/upload`, {
+      const res = await apiFetch(`${API_BASE}/datasets/upload`, {
         method: 'POST',
         body: formData,
       });
@@ -397,7 +416,7 @@ export default function App() {
   const handleDelete = async (datasetId) => {
     if (!window.confirm('Are you sure you want to delete this dataset? All its records and query history will be removed.')) return;
     try {
-      const res = await fetch(`${API_BASE}/datasets/${datasetId}`, { method: 'DELETE' });
+      const res = await apiFetch(`${API_BASE}/datasets/${datasetId}`, { method: 'DELETE' });
       if (!res.ok) throw new Error('Delete failed');
       const updated = datasets.filter((d) => d.id !== datasetId);
       setDatasets(updated);
@@ -413,7 +432,7 @@ export default function App() {
   // 12. Delete History Item
   const handleDeleteHistory = async (historyId) => {
     try {
-      const res = await fetch(`${API_BASE}/query-history/${historyId}`, { method: 'DELETE' });
+      const res = await apiFetch(`${API_BASE}/query-history/${historyId}`, { method: 'DELETE' });
       if (res.ok) {
         setHistoryItems((prev) => prev.filter((h) => h.id !== historyId));
       }
@@ -638,7 +657,7 @@ export default function App() {
                 >
                   {datasets.map((d) => (
                     <option key={d.id} value={d.id}>
-                      {d.name} ({d.row_count} rows)
+                      {d.name} {d.is_demo ? '(Demo)' : ''} ({d.row_count} rows)
                     </option>
                   ))}
                 </select>
@@ -1521,20 +1540,29 @@ export default function App() {
                         }`}
                       >
                         <div className="space-y-0.5">
-                          <p className="font-medium text-slate-900">{d.name}</p>
+                          <div className="flex items-center gap-2">
+                            <p className="font-medium text-slate-900">{d.name}</p>
+                            {d.is_demo && (
+                              <span className="text-[10px] font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                Demo
+                              </span>
+                            )}
+                          </div>
                           <p className="text-slate-400 text-[11px] font-mono">
                             {d.row_count} rows • {new Date(d.created_at).toLocaleDateString()}
                           </p>
                         </div>
 
                         <div className="flex items-center gap-1" onClick={(e) => e.stopPropagation()}>
-                          <button
-                            onClick={() => handleDelete(d.id)}
-                            className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded transition cursor-pointer"
-                            title="Delete dataset"
-                          >
-                            <Trash2 className="w-3.5 h-3.5" />
-                          </button>
+                          {!d.is_demo && (
+                            <button
+                              onClick={() => handleDelete(d.id)}
+                              className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded transition cursor-pointer"
+                              title="Delete dataset"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          )}
                         </div>
                       </li>
                     ))}

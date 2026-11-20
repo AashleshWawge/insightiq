@@ -18,6 +18,7 @@ class DatasetResponse(BaseModel):
     original_filename: str
     row_count: int
     status: str
+    is_demo: bool = False
     created_at: datetime
 
 
